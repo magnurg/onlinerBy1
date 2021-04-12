@@ -47,7 +47,8 @@ export = function onlinerSteps() {
     this.Then(/^I see following search result headers: "Все", "Продам", "Куплю", "Обмен", "Услуга", "Аренда", "Закрыто"$/, async () => {
         let elemArr:ElementFinder = await element(by.xpath('//ul[@class="b-ba-tabs fleamarket__1"]/child::*'));
         let itemNamesArr:Array<string> = ["Все", "Продам", "Куплю", "Обмен", "Услуга", "Аренда", "Закрыто"];
-        
+
+        await browser.wait(ExpectedConditions.presenceOf(elemArr));
         for (let i = 0; i < elemArr.length; i++) {
             await ExpectedConditions.textToBePresentInElement(elemArr[i], itemNamesArr[i]);
         };
