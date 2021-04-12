@@ -14,11 +14,13 @@ export = function onlinerSteps() {
 
     this.Then(/^I click "Барахолка" in Onliner.by header$/, async () => {
         let barakholkaButton:ElementFinder = await element(by.xpath('//span[contains(text(), "Барахолка") and @class="b-main-navigation__text"]'));
+        await browser.wait(ExpectedConditions.visibilityOf(barakholkaButton));
         await barakholkaButton.click();
     });
 
     this.Then(/^I redirected to  "Барахолка" page$/, async () => {
         let barakholkaURL:string = "https://baraholka.onliner.by/";
+        await browser.wait(ExpectedConditions.urlIs(barakholkaURL));
         await ExpectedConditions.urlIs(barakholkaURL);
     });
 
@@ -26,16 +28,19 @@ export = function onlinerSteps() {
         let onlinerURL:string = "https://www.onliner.by/";
         let barakholkaButton:ElementFinder = await element(by.xpath('//span[contains(text(), "Барахолка") and @class="b-main-navigation__text"]'));
         await browser.navigate().to(onlinerURL);
+        await browser.wait(ExpectedConditions.visibilityOf(barakholkaButton));
         await barakholkaButton.click();
     });
 
     this.Then(/^I enter "Лопата" in Search field$/, async () => {
         let searchField:ElementFinder = await element(by.xpath('//input[@id="fleaMarketSearchInput"]'));
+        await browser.wait(ExpectedConditions.visibilityOf(searchField));
         await searchField.sendKeys("Лопата");
     });
 
     this.Then(/^I click "Search" button$/, async () => {
         let searchButton:ElementFinder = await element(by.xpath('//button[@value="Найти"]'));
+        await browser.wait(ExpectedConditions.visibilityOf(searchButton));
         await searchButton.click();
     });
 
@@ -43,10 +48,8 @@ export = function onlinerSteps() {
         let elemArr:ElementFinder = await element(by.xpath('//ul[@class="b-ba-tabs fleamarket__1"]/child::*'));
         let itemNamesArr:Array<string> = ["Все", "Продам", "Куплю", "Обмен", "Услуга", "Аренда", "Закрыто"];
         
-        await function(){
-            for (let i = 0; i < elemArr.length; i++) {
-                ExpectedConditions.textToBePresentInElement(elemArr[i], itemNamesArr[i]);
-            };
+        for (let i = 0; i < elemArr.length; i++) {
+            await ExpectedConditions.textToBePresentInElement(elemArr[i], itemNamesArr[i]);
         };
     });
 };
