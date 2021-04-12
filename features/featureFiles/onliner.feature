@@ -8,7 +8,7 @@ Feature: Onliner showcase
              Then I redirected to  "Барахолка" page
 
       
-        Scenario Outline: Searching "Лопата" on "Барахолка" page
+       
 
             Given I am on "Барахолка" page of onliner.by
              When I enter "Лопата" in Search field
